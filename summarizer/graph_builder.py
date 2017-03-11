@@ -1,4 +1,5 @@
 import numpy as np
+import sentence_similarity as ss
 
 '''
 num_sentences_in_doc: An integer representing the number of sentences in the doc
@@ -23,7 +24,7 @@ returns     : A completed adj matrix
 def build_adj_matrix(adj_matrix, doc_s_matrix):
     for s1_index in range( len( doc_s_matrix ) ):
         for s2_index in range( len( doc_s_matrix ) ):
-            adj_matrix[s1_index][s2_index] = compute_similarity( doc_s_matrix[s1_index], doc_s_matrix[s2_index])
+            adj_matrix[s1_index][s2_index] = ss.compute_similarity( doc_s_matrix[s1_index], doc_s_matrix[s2_index], 0)
     return adj_matrix
 
 '''
@@ -38,18 +39,6 @@ def build_doc_matrix(s_array, doc_s_matrix, unique_terms):
             if unique_terms[uq_index] in s_array[sentence]:
                 doc_s_matrix[sentence][uq_index] = 1
     return doc_s_matrix
-
-'''
-sentence1: A numpy array bit vector of all terms in doc with 1 for all terms in sentence1
-sentence2: A numpy array bit vector of all terms in doc with 1 for all terms in sentence1
-returns  : An integer similarity score using Textrank similarity
-'''
-def compute_similarity(sentence1, sentence2):
-    similarity_score = 0
-    for word_index in range( len( sentence1 ) ):
-        if sentence1[ word_index ] and sentence2[ word_index ]:
-            similarity_score +=1
-    return similarity_score
 
 '''
 adj_matrix  : A matrix where each sentence is adjacent by some weight

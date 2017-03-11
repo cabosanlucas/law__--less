@@ -7,7 +7,7 @@ returns       : A nunpy array filled with 1/(size of adj matrix)
 '''
 def build_probability_matrix(len_adj_matrix):
     p_matrix = np.zeros(( len_adj_matrix , len_adj_matrix ))
-    probability = 1 / float(len_adj_matrix)
+    probability = 1 / ( 1 + float(len_adj_matrix))
     p_matrix.fill(probability)
     return p_matrix
 
@@ -55,10 +55,15 @@ def get_n_best_sentences(s_array, scores, n):
         n = len(s_array)
     #make them into score, sentence tuples
     score_sentence = [(scores[i] , s_array[i]) for i in range(len(s_array))]
-    #sort these tuples
-    sorted_score_sentence = sorted(score_sentence, key=lambda x: x[0], reverse=True)
-    #grab the n best
-    best_n = [sorted_score_sentence[i][1] for i in range(n)]
+
+    #get n best indicies of these tuples
+    sorted_score_sentence_index = sorted(range(len(score_sentence)), key=lambda x: score_sentence[x])[-n:]
+
+    #sort the indicies
+    sorted_score_sentence_index.sort()
+
+    #get the sentences that the indicies correspond with
+    best_n = [score_sentence[sorted_score_sentence_index[i]][1] for i in range(n)]
     return best_n
 ###########################This is effectively the main#########################
 '''
@@ -69,7 +74,7 @@ returns   : An array where each index of the array has a score and that index is
 the same as the order in which the sentence was passed in
 '''
 def run_textrank_and_return_n_sentences(adj_matrix, s_array, d, n):
-    eigen_vectors =  textrank(adj_matrix, d)
+    eigen_vectors =   (adj_matrix, d)
     scores = get_sentence_scores(s_array, eigen_vectors)
     best_sentences = get_n_best_sentences( s_array, scores, n)
     return best_sentences
