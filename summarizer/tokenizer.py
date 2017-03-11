@@ -4,7 +4,7 @@ from nltk.data import load
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 import re
-
+import os
 """
 	text         :    the document to be tokenized by sentance
 	languange    :    the language the document is in
@@ -76,10 +76,29 @@ def stem(tokenized_list):
 """
 def clean_document_and_return_sentances(doc, language='english'):
 	sentances = tokenize_text(doc, language)
-	return stem(remove_stopwords_and_clean(sentances))
+	stemmed_words = stem(remove_stopwords_and_clean(sentances))
+	stemmed_sentances = joinSentances(stemmed_words)
+	write_sentances(stemmed_sentances)
+	return stemmed_sentances
+
+def joinSentances(stemmed_words):
+	sentances = []
+	for sentance in stemmed_words:
+		sen = " ".join(sentance)
+		sentances.append(sen)
+	return sentances
+
+"""
+	cleaned_sentances    :    tokenized, stemmed, cleaned sentances to be written
+	returns              :    none
+"""
+def write_sentances(cleaned_sentances):
+	print os.getcwd()
+	with open("summarizer/doc/doc.dat", 'w') as file:
+		file.write(	"\n".join(cleaned_sentances))
 
 if __name__ == '__main__':
 	#nltk.download()
 	sens = "text mining is an important aspect of 410. As is text retrival. This sentence is unrelated."
 	print sens
-	print tokenize_text(sens)
+	print clean_document_and_return_sentances(sens)

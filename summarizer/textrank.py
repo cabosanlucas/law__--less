@@ -1,5 +1,7 @@
 import numpy as np
 import scipy.linalg as spl
+from sklearn.preprocessing import normalize
+
 
 '''
 len_adj_matrix: The size of the adj matrix
@@ -7,7 +9,7 @@ returns       : A nunpy array filled with 1/(size of adj matrix)
 '''
 def build_probability_matrix(len_adj_matrix):
     p_matrix = np.zeros(( len_adj_matrix , len_adj_matrix ))
-    probability = 1 / float(len_adj_matrix)
+    probability = 1 /(1 + float(len_adj_matrix))
     p_matrix.fill(probability)
     return p_matrix
 
@@ -42,13 +44,18 @@ def textrank(adj_matrix, d, epsilon=0.00001, maxIterations=1000):
     tr_matrix = d * adj_matrix + (1 - d) * prob_matrix
 
     #old_state = np.copy(tr_matrix)
+    print tr_matrix.shape
+
+    tr_matrix = normalize(tr_matrix, axis=1, norm='l1')
+
+    print tr_matrix
 
     power_matrix = np.empty_like(tr_matrix)
     power_matrix.fill(.25)
 
     for iteration in range(maxIterations):
         old_state = np.copy(tr_matrix)
-        tr_matrix = tr_matrix.dot(power_matrix)
+        tr_matrix = tr_matrix.dot(old_state)
         delta = tr_matrix - old_state
         if np.sum(np.abs(tr_matrix - old_state)) < epsilon:
             break
@@ -56,6 +63,7 @@ def textrank(adj_matrix, d, epsilon=0.00001, maxIterations=1000):
     vectors = []
     for vec in tr_matrix.T:
         vectors.append(vec)
+    print vectors
     return vectors
     #using scipy left eigenvector to grab scores
     #values, vectors = spl.eig(tr_matrix, left=True, right=False)

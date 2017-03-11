@@ -46,6 +46,7 @@ def upload_target():
         #strings = calculate_unigrams(cleaned_string, keywords) # calculate most important sentences, possibly calculate_unigrams(cleaned_string, keyword        out_file = open("output.txt", "w")
         
         sentences = tokenize_text(cleaned_string)
+        stemmed_sentences = clean_document_and_return_sentances(cleaned_string)
         print sentences
         adj_matrix = create_sentence_adj_matrix(sentences)
         strings = run_textrank_and_return_n_sentences(adj_matrix, sentences, .85, 5)
@@ -139,4 +140,22 @@ for extension in extensions:
         db.session.commit() 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80, threaded=True) #debug=True can be added for debugging
+    #app.run(host='0.0.0.0', port=80, threaded=True) #debug=True can be added for debugging
+    with open("CS410ProjectProposal.PDF") as file_text:
+        cleaned_string = cleaner( pdf2text(file_text) ) # convert pdf to txt
+    #keywords = get_top_n_words(cleaned_string , 5)
+    #strings = calculate_unigrams(cleaned_string, keywords) # calculate most important sentences, possibly calculate_unigrams(cleaned_string, keyword        out_file = open("output.txt", "w")
+    
+    sentences = tokenize_text(cleaned_string)
+    stemmed_sentences = clean_document_and_return_sentances(cleaned_string)
+    print sentences
+    adj_matrix = create_sentence_adj_matrix(sentences)
+    strings = run_textrank_and_return_n_sentences(adj_matrix, sentences, .85, 5)
+#    out_file = open("temp.txt") #open(md5.new(request.headers["User-Agent"]).hexdigest()+".txt", "w")
+    with open("temp.txt", 'w') as out_file:
+        for string in strings:
+            out_file.write(string+".")
+        out_file.close() # persistent abstract
+   # return "success"
+
+    
