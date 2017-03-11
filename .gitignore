@@ -13,5 +13,5 @@ input_cleaning/pdf2txt.pyc
 input_cleaning/__init__.pyc
 app.pyc
 input_cleaning/xmlCleaner.pyc
+summarizer/meta
 *.pyc
-.DS_Store

@@ -1,0 +1,301 @@
+measur similar sentenc thanh ngoc dao thanh
+daogmxnet  troy simpson troyebswiftcom download sourc opensvn repositori see articl get work copi repositori
+introduct previou articl present approach captur similar word concern syntact similar two string
+today back discuss anoth approach concern mean word
+semant similar confid score reflect semant relat mean two sentenc
+difficult gain high accuraci score exact semant mean complet understood particular context
+goal paper to present dictionarybas algorithm captur semant similar two sentenc heavili base wordnet semant dictionari
+encourag work interest topic nlp
+groundwork go further let us start brief introduct groundwork
+wordnet wordnet lexic databas avail onlin provid larg repositori english lexic item
+multilingu wordnet european languag structur way english languag wordnet
+wordnet design establish connect four type part speech po  noun verb adject adverb
+smallest unit wordnet synset repres specif mean word
+includ word explan synonym
+specif mean one word one type po call sens
+sens word differ synset
+synset equival sens  structur contain set term synonym mean
+synset gloss defin concept repres
+exampl word night nighttim dark constitut singl synset follow gloss time sunset sunris dark outsid
+synset connect one anoth explicit semant relat
+relat hypernym hyponym noun hypernym troponym verb constitut isakindof holonymi isapartof meronymi noun hierarchi
+exampl tree kind plant tree hyponym plant plant hypernym tree
+analog trunk part tree trunk meronym tree tree holonym trunk
+one word one type po one sens wordnet organ order frequent use least frequent use semcor
+wordnet
+net malcolm crow troy simpson develop opensourc 
+net framework librari wordnet call wordnet
+net
+wordnet
+net origin creat malcolm crow known c librari wordnet
+creat wordnet 1
+6 stay origin form releas wordnet 2
+0 troy gain permiss malcolm use code freewar dictionarythesauru project
+final wordnet 2
+1 releas troy releas version malcolm librari lgpl librari known wordnet
+net permiss princeton malcolm crow consult free softwar foundat updat work wordnet 2
+1 databas
+time write wordnet
+net librari opensourc short period time expect matur project spawn librari avail
+bug fix extens malcolm origin librari ongo year half prior releas open sourc project
+project address wordnet
+net
+semant similar sentenc given two sentenc measur determin similar mean two sentenc is
+higher score similar mean two sentenc
+step comput semant similar two sentenc first sentenc partit list token
+partofspeech disambigu tag
+stem word
+find appropri sens everi word sentenc word sens final comput similar sentenc base similar disambigu
+pair word
+token sentenc partit list word remov stop word
+stop word frequent occur insignific word appear databas record articl web page etc
+tag part speech  task identifi correct part speech po  like noun verb pronoun adverb 
+
+
+word sentenc
+algorithm take sentenc input specifi tag set finit list po tag
+output singl best po tag word
+two type tagger first one attach syntact role word subject object 
+
+second one attach function role noun verb 
+
+
+
+lot work done po tag
+tagger classifi rulebas stochast
+rulebas tagger use hand written rule disambigu tag ambigu
+exampl rulebas tag brill tagger eric brill algorithm
+stochast tagger resolv tag ambigu use train corpu comput probabl given word given tag given context
+exampl tagger use hidden markov model maxim likelihood
+brill tagger sampl c two sampl includ use brill tagger c applic
+brill tagger tool librari sampl found 3rdpartytoolsdata folder sourc repositori
+one avail port vb
+net port steven abbott origin brill tagger
+port turn port c troy simpson
+port vc paul maddox
+c test program paul maddox port use wrapper read stdout directli command line applic
+wrapper creat use templat mike mayer
+see respect test applic work exampl use brill tagger c
+port steven abbott work fairli new test like paul vc port deprec replac troy c port steven vb
+net work
+stem word  use porter stem algorithm
+porter stem process remov common morpholog inflexion end word
+thought lexicon finit state transduc follow step surfac form  split word possibl morphem  get intermedi form  map stem categori affix mean  underli form
+ie  fox  fox   fox
+ current work use semant similar project soon integr
+get idea use portersterm class brill tagger sampl repositori
+semant related word sens disambigu wsd alreadi awar word one sens lead ambigu
+exampl word interest differ mean follow two context interest bank
+interest subject
+wsd origin micheal lesk algorithm disambigu process find appropri sens word use given sentenc
+lesk algorithm 13use dictionari definit gloss disambigu polysem word sentenc context
+major object idea count number word share two gloss
+overlap word relat sens are
+disambigu word gloss sens compar gloss everi word phrase
+word assign sens whose gloss share largest number word common gloss word
+exampl perform disambigu pine cone phrasal accord oxford advanc learner dictionari word pine two sens sens 1 kind evergreen tree needleshap leav sens 2 wast away sorrow ill
+word cone three sens sens 1 solid bodi narrow point sens 2 someth shape whether solid hollow sens 3 fruit certain evergreen tree
+compar two gloss sens word pine three sens word cone found word evergreen tree occur one sens two word
+two sens declar appropri sens word pine cone use togeth
+origin lesk algorithm begin anew word util sens previous assign
+greedi method alway work effect
+therefor comput time critic think optim sens combin appli local search techniqu beam
+major idea behind method reduc search space appli sever heurist techniqu
+beam searcher limit attent k promis candid stage search process k predefin number
+adapt micheal lesk algorithm origin lesk use gloss word restrict overlap score mechan
+section introduc adapt version algorithm16 improv overcom limit access dictionari sens arrang hierarch order wordnet
+extend version use glossdefinit synset also consid mean relat word
+appli new score mechan measur gloss overlap give accur score origin lesk bag word counter
+disambigu word sentenc n word call word disambigu target word
+algorithm describ follow step 1
+select context optim comput time n long defin k context around target word knearest neighbor sequenc word start k word left target word end k word right
+reduc comput space decreas process time
+exampl k four two word left target word two word right
+2
+word select context look list possibl sens po part speech noun verb
+3
+sens word wordsens list follow relat exampl pine cone glossdefinit includ exampl text wordnet gloss synset connect provid gloss
+hypernym relat
+one hypernym word sens gloss hypernym concaten singl gloss string 
+relat 
+gloss synset connect hyponym gloss synset connect meronym gloss synset connect troponym relat 
+relat 
+ appli rule
+4
+combin possibl gloss pair archiv previou step comput related search overlap
+overal score sum score relat pair
+comput related two synset s1 s2 pair hypehyp mean gloss hypernym s1 compar gloss hypernym s2
+pair hypehypo mean gloss hypernym s1 compar gloss hyponym s2
+overallscores1 s2 scorehypes1hypos2  scoreglosss1hypos2  scorehypes1glosss2
+
+
+overallscores1 s2 also equival overallscores2 s1 
+exampl pine cone 3 sens pine 6 sens cone total 18 possibl combin
+one right one
+score overlap use new score mechan differenti nsingl word nconsecut word overlap effect treat gloss bag word
+base zipf law say length word invers proport usag
+shortest word use often longest one use less often
+measur overlap two string reduc solv problem find longest common substr maxim consecut
+overlap contain n consecut word contribut n2 score gloss sens combin
+exampl overlap abc score 329 two singl overlap ab c score 22  115
+5
+combin score pick sens highest score appropri sens target word select context space
+hope output give us appropri sens also associ part speech word
+intend work topic refer measur hirststong base find lexic chain synset
+semant similar two synset method allow us find appropri sens word sentenc
+comput similar two sentenc base semant similar word sens
+captur semant similar two word sens base path length similar
+wordnet part speech word nounsverb
+
+
+organ taxonomi node set synonym synset repres one sens
+word one sens appear multipl synset variou locat taxonomi
+wordnet defin relat synset relat word sens
+relat synset semant relat relat word sens lexic relat
+differ lexic relat relat member two differ synset semant relat relat two whole synset
+instanc semant relat hypernym hyponym holonym  etc
+lexic relat antonym relat deriv form relat
+use exampl antonym tenth sens noun light lightn10 wordnet first sens noun dark darkn1
+synset belong lightn10 lightingn1
+clearli make sens lightn10 antonym darkn1 lightingn1 antonym darkn1 therefor antonym relat need lexic relat semant relat
+semant similar special case semant related consid isa relationship
+path lengthbas similar measur measur semant similar two synset use hyponymhypernym isa relat
+due limit isa hierarchi work nounnoun verbverb part speech
+simpl way measur semant similar two synset treat taxonomi undirect graph measur distanc wordnet
+said p resnik  shorter path one node anoth similar are
+note path length measur nodesvertec rather linksedg
+length path two member synset 1 synonym relat
+figur show exampl hyponym taxonomi wordnet use path length similar measur figur observ length car auto 1 car truck 3 car bicycl 4 car fork 12
+share parent two synset known subsum
+least common subsum lc two synset sumer children also subsum two synset
+word lc two synset specif subsum two synset
+back exampl lc car auto
+
+truck
+
+automot motor vehicl sinc automot motor vehicl specif common subsum wheel vehicl
+path length give us simpl way comput related distanc two word sens
+issu need address possibl two synset part speech common subsum
+sinc join differ top node part speech taxonomi path cannot alway found two synset
+uniqu root node use path alway exist two nounverb synset
+note multipl inherit allow wordnet synset belong one taxonomi
+one path two synset shortest path select
+lemmat look word wn word first lemmat
+therefor distanc book book 0 sinc ident
+mice mous
+measur compar word sens part speech po
+mean compar noun verb locat differ taxonomi
+consid word noun verb adject respect
+omiss po tagger use jeff martin lexicon class
+consid word first check noun treat noun verb adject disregard
+noun check verb
+
+
+compound noun like travel agent treat two singl word via token
+measur similar ms1 mani propos measur semant similar two synset leacock chodorow presnik
+work experi two simpl measur sim  1distanc t
+distanc shortest path length use node count
+measur similar ms2 formula propos wu palmer measur take account path length depth least common subsumm  sim  2  depthlcsdepth  deptht t denot sourc target word compar
+depth shortest distanc root node node lc denot least common subsubm t
+taxonomi synset lie 
+semant similar two sentenc describ overal strategi captur semant similar two sentenc
+given two sentenc x y denot length x n length y major step describ follow 1
+token
+2
+perform word stem
+3
+perform part speech tag
+4
+word sens disambigu
+5
+build semant similar rel matrix rm n pair word sens ri j semant similar appropri sens word posit x appropri sens word posit j y thu rij also weight edg connect j
+word exist dictionari use editdist similar instead output lower associ weight exampl abbrevi like cto chief technolog offic
+anoth solut abbrevi use abbrevi dictionari abbrevi pattern recogn rule
+6
+formul problem captur semant similar sentenc problem comput maximum total match weight bipartit graph x two set disjoint node
+use hungarian method solv problem pleas refer previou articl captur similar two string
+7
+match result previou step combin singl similar valu two sentenc
+mani strategi acquir overal similar two set
+previou section present two simpl formula comput semant similar two wordsens
+formula appli appropri strategi comput overal score match averag matchx match word token x y similar comput divid sum similar valu match candid sentenc x total number set token
+import point base individu similar valu overal similar alway reflect influenc them
+appli strategi ms1 formula
+dice coeffici strategi return ratio number token match total token
+appli strategi ms2 formula
+henc dice alway return higher valu match averag thu optimist
+strategi need predefin threshold select match pair valu exceed given threshold
+cosin jarccard coeffici consid particular case associ vector similar measur
+exampl given two sentenc x y x length 3 2 respect
+bipartit matcher return x1 match y1 score 0
+8 x2 match y2 score 0
+7 use match averag overal score  20
+8  0
+7  3  2 use dice threshold 0
+5 sinc match pair  0
+6
+score greater threshold total 2 match pair
+overal score is 21  1 32  0
+8
+8
+comput time critic use simpl fast heurist method follow
+pseudo code comput similar two sentenc x is sumx  0 sumi  0 int i0  x i maxi0 int j0 j  y j ri j  maxi maxiri j  maxi sumx  maxi int j0 j  y j maxj0 int i0  x j ri j  maxj maxjri j  maxi sumi  maxj overallsim  sumx  sumi  2  x  y use code run code instal wordnet 2
+1
+current sourc code store opensvn repositori
+pleas read articl  use wordnet
+net subvers repositori download sourc code
+code use test semant similar function void test semanticsimilar semsimnew semanticsimilar  float scoresemsim
+getscoredefens ministri depart defenc futur work time restrict problem whenev possibl would like do improv usabl experi
+extend wsd algorithm supervis learn method naiv bayesian classifi model
+disambigu part speech use probabilist decis tree
+conclus articl seen simpl approach captur semant similar
+work might mani limit sinc nlp research group
+thing need improv final work approv move copi codeproject
+process may take work day
+perl open sourc packag semant similar t pedersen team
+unfortun know perl would help someon could migrat 
+net
+well stop hope other might inspir work wordnet
+net develop open sourc librari make use
+acknowledg mani thank to wordnet princeton mcrow tpedersen  team sbanerje jmichelizzi s patwardhan  m lesk ebril mporter presnik hirst  stong t syedamahmood l yan w urban h do e rahm x su  j a gulla fguinchiglia m yatskevich av goldberg 
+
+
+use result research paper
+would like thank mawarin jmartin clemon rnorthedg s abbott p maddox provid help document resourc insight comment work
+articl worth read 1
+av goldberg r kennedi effici cost scale algorithm assign problem 1993
+2
+wordnet princeton
+3
+t syedamahmood l yan w urban  semant search schema repositori 2005
+4
+t dao  improv captur similar string 2005 
+5
+t simpson wordnet
+net 2005 
+6
+t pedersen s banerje s patwardhan maxim semant related perform word sens disambigu 2005
+7
+h do e rahm  coma system flexibl combin schema match approach 2002
+8
+p resnik wordnet classbas probabl
+9
+j michelizzi master scienc thesi 2005
+10
+x su j a gulla semant enrich ontolog map 2004
+11
+fguinchiglia m yatskevich element level semant match 2004
+12
+g hirst dst ong lexic chain represent context detect correct malaprop
+13
+m lesk automat sens disambigu use machin readabl dictionari tell pine code ice cream cone 1986
+14
+e brill
+simpl rulebas part speech tagger 1993
+15
+s banerje t pedersen adapt lesk algorithm word sens disambigu use wordnet 2002
+16
+s banerje t pedersen extend gloss overlap measur semant related 2003
+17
+m mayer launch process display standard output
+ coauthor articl

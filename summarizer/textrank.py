@@ -1,5 +1,7 @@
 import numpy as np
 import scipy.linalg as spl
+from sklearn.preprocessing import normalize
+
 
 '''
 len_adj_matrix: The size of the adj matrix
@@ -20,8 +22,8 @@ returns: An array where each index of the array has a score and that index is
 def get_sentence_scores(s_array, vecs):
     scores = []
     for s in range( len( s_array ) ):
-        print s
-        print abs(vecs[s][0])
+    #    print s
+    #    print abs(vecs[s][0])
         scores.append(abs(vecs[s][0]))
     return scores
 
@@ -42,13 +44,18 @@ def textrank(adj_matrix, d, epsilon=0.00001, maxIterations=1000):
     tr_matrix = d * adj_matrix + (1 - d) * prob_matrix
 
     #old_state = np.copy(tr_matrix)
+    print tr_matrix.shape
+
+    tr_matrix = normalize(tr_matrix, axis=1, norm='l1')
+
+    print tr_matrix
 
     power_matrix = np.empty_like(tr_matrix)
     power_matrix.fill(.25)
 
     for iteration in range(maxIterations):
         old_state = np.copy(tr_matrix)
-        tr_matrix = tr_matrix.dot(power_matrix)
+        tr_matrix = tr_matrix.dot(old_state)
         delta = tr_matrix - old_state
         if np.sum(np.abs(tr_matrix - old_state)) < epsilon:
             break
@@ -56,6 +63,7 @@ def textrank(adj_matrix, d, epsilon=0.00001, maxIterations=1000):
     vectors = []
     for vec in tr_matrix.T:
         vectors.append(vec)
+    print vectors
     return vectors
     #using scipy left eigenvector to grab scores
     #values, vectors = spl.eig(tr_matrix, left=True, right=False)
@@ -91,7 +99,7 @@ returns   : An array where each index of the array has a score and that index is
 the same as the order in which the sentence was passed in
 '''
 def run_textrank_and_return_n_sentences(adj_matrix, s_array, d, n):
-    eigen_vectors =   (adj_matrix, d)
+    eigen_vectors = textrank(adj_matrix, d)
     scores = get_sentence_scores(s_array, eigen_vectors)
     best_sentences = get_n_best_sentences( s_array, scores, n)
     return best_sentences
