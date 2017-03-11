@@ -134,7 +134,11 @@
             <div class="output-frame">
               <p id="output" style="display:none"></p>
             </div>
-            <div>{{extensions|safe}}</div>
+            <div class="ext-div">
+              <h4>Extensions</h4>
+              {{extensions|safe}}
+              <input type="button" onclick="window.open('market')" class="btn btn-large" value="+">
+            </div>
             <div id="extensionFrame" class="extension-frame">
               <p id="extensionFrameTitle" class="extension-frame-title"></p>
               <i class="material-icons extension-close" onclick="document.getElementById('extensionFrame').style.display='none';">clear</i>

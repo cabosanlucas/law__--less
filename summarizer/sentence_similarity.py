@@ -28,8 +28,8 @@ N = 0
 ######################### word similarity ##########################
 
 def get_best_synset_pair(word_1, word_2):
-    if  type(word_1) != str or type(word_2) != str:
-        return None, None
+    # if  type(word_1) != str or type(word_2) != str:
+    #     return None, None
     """
     Choose the pair with highest path similarity among all pairs.
     Mimics pattern-seeking behavior of humans.
