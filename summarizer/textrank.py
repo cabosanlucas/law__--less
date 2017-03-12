@@ -1,6 +1,7 @@
 import numpy as np
 import scipy.linalg as spl
 from sklearn.preprocessing import normalize
+from topic_extractor import get_scores_for_doc
 
 
 '''

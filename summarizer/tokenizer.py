@@ -94,7 +94,7 @@ def joinSentances(stemmed_words):
 """
 def write_sentances(cleaned_sentances):
 	print os.getcwd()
-	with open("doc/doc.dat", 'w') as file:
+	with open("summarizer/doc/doc.dat", 'w') as file:
 		file.write(	"\n".join(cleaned_sentances))
 
 if __name__ == '__main__':
