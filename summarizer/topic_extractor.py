@@ -2,12 +2,21 @@ import metapy
 import os
 import shutil
 from tokenizer import *
+from os import listdir
+from os.path import isfile, join
 
 def get_scores_for_doc(query):
 	#converts sentances written to the doc.dat file by the tokenizer to an inverted index
+	print os.getcwd()
+	if('summarizer' not in os.getcwd()):
+		print "hi"
+		os.chdir('summarizer/')
+	onlyfiles = [f for f in listdir(os.getcwd()) if isfile(join(os.getcwd(), f))]
+	print onlyfiles
 	if(os.path.exists('idx')):
 		shutil.rmtree('idx')
 	idx = metapy.index.make_inverted_index('config.toml')
+
 	ranker = metapy.index.OkapiBM25(k1=1.2, b=0.75, k3=500)
 
 	query = metapy.index.Document()
