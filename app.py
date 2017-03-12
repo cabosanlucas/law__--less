@@ -41,9 +41,10 @@ def upload_target():
     if request.method == "POST" :
         file_key = request.files.keys()[0]
         file_text = request.files[file_key] # of type FileStorage
-        cleaned_string = cleaner( pdf2text(file_text) ) # convert pdf to txt
+        cleaned_string = cleaner( pdf2text(file_text) ) # convert pdf to txt       out_file = open("output.txt", "
         #keywords = get_top_n_words(cleaned_string , 5)
-        #strings = calculate_unigrams(cleaned_string, keywords) # calculate most important sentences, possibly calculate_unigrams(cleaned_string, keyword        out_file = open("output.txt", "w")
+        #strings = calculate_unigrams(cleaned_string, keywords) # calculate most important sentences, possibly calculate_unigrams(cleaned_string, keyword        
+        #out_file = open("output.txt", "w")
         
         sentences = tokenize_text(cleaned_string)
         stemmed_sentences = clean_document_and_return_sentances(cleaned_string)
@@ -69,9 +70,14 @@ def get_target():
     except IOError:
         return ""
 
-@app.route('/cases',methods=['GET'])
+@app.route('/cases',methods=['GET', 'POST']) # post method for handling queries
 def cases():
-    return render_template("cases.html", extensions=init_extensions())
+    if request.method == 'POST':
+        query = request.form["query"]
+        return render_template("cases.html", extensions=init_extensions(), query=query, popup="block")
+    else:
+        return render_template("cases.html", extensions=init_extensions(), popup="none")
+    
 
 @app.route('/features',methods=['GET'])
 def features():
@@ -133,6 +139,7 @@ for extension in extensions:
             name=extension,
             author=config_json["author"],
             description=config_json["description"],
+            field=config_json["field"],
             rating_points = 0,
             total_ratings = 0
         )
