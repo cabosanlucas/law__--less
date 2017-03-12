@@ -46,12 +46,9 @@ def textrank(adj_matrix, d, epsilon=0.00001, maxIterations=1000):
     #old_state = np.copy(tr_matrix)
     print tr_matrix.shape
 
-    tr_matrix = normalize(tr_matrix, axis=1, norm='l1')
+    #tr_matrix = normalize(tr_matrix, axis=0, norm='l1')
 
     print tr_matrix
-
-    power_matrix = np.empty_like(tr_matrix)
-    power_matrix.fill(.25)
 
     for iteration in range(maxIterations):
         old_state = np.copy(tr_matrix)
@@ -66,7 +63,8 @@ def textrank(adj_matrix, d, epsilon=0.00001, maxIterations=1000):
     print vectors
     return vectors
     #using scipy left eigenvector to grab scores
-    #values, vectors = spl.eig(tr_matrix, left=True, right=False)
+    #values, vectorss = spl.eig(tr_matrix, left=True, right=False)
+    #return vectorss
 
 '''
 s_array: A list of sentences where each sentence is a list of terms
@@ -81,9 +79,10 @@ def get_n_best_sentences(s_array, scores, n):
     #make them into score, sentence tuples
     score_sentence = [(scores[i] , s_array[i]) for i in range(len(s_array))]
     #sort these tuples
-    sorted_score_sentence = sorted(score_sentence, key=lambda x: x[0], reverse=True)
+    sorted_score_sentence_index = sorted(range(len(score_sentence)), key=lambda x: score_sentence[x])[-n:]
+    sorted_score_sentence_index.sort()
     #grab the n best
-    best_n = [sorted_score_sentence[i][1] for i in range(n)]
+    best_n = [score_sentence[sorted_score_sentence_index[i]][1] for i in range(n)]
     return best_n
 ###########################This is effectively the main#########################
 '''
