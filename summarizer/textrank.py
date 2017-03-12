@@ -22,8 +22,8 @@ returns: An array where each index of the array has a score and that index is
 def get_sentence_scores(s_array, vecs):
     scores = []
     for s in range( len( s_array ) ):
-        print s
-        print abs(vecs[s][0])
+        #print s
+        #print abs(vecs[s][0])
         scores.append(abs(vecs[s][0]))
     return scores
 
@@ -60,7 +60,7 @@ def textrank(adj_matrix, d, epsilon=0.00001, maxIterations=1000):
     vectors = []
     for vec in tr_matrix.T:
         vectors.append(vec)
-    print vectors
+   # print vectors
     return vectors
     #using scipy left eigenvector to grab scores
     #values, vectorss = spl.eig(tr_matrix, left=True, right=False)
@@ -92,10 +92,11 @@ s_array   : A list of sentences where each sentence is a list of terms
 returns   : An array where each index of the array has a score and that index is
 the same as the order in which the sentence was passed in
 '''
-def run_textrank_and_return_n_sentences(adj_matrix, s_array, d, n):
+def run_textrank_and_return_n_sentences(adj_matrix, s_array, d, n, query):
     eigen_vectors =  textrank(adj_matrix, d)
-    scores = get_sentence_scores(s_array, eigen_vectors)
-    best_sentences = get_n_best_sentences( s_array, scores, n)
+    textrank_score = get_sentence_scores(s_array, eigen_vectors)
+    BM25_score = get_scores_for_doc(query)
+    best_sentences = get_n_best_sentences(s_array, scores, n)
     return best_sentences
 
 ###########################Silly Test###########################################

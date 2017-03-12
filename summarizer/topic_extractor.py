@@ -3,6 +3,18 @@ import os
 import shutil
 from tokenizer import *
 
+def get_scores_for_doc(query):
+	#converts sentances written to the doc.dat file by the tokenizer to an inverted index
+	idx = metapy.make_inverted_index('config.toml')
+	ranker = metapy.index.OkapiBM25(k1=1.2, b=0.75, k3=500)
+
+	query = metapy.index.Document()
+	query.content(query)
+
+	results = ranker.score(idx, query, idx.num_docs())
+	results = sorted(results, key = lambda doc : int(doc[0]))
+	return results
+
 
 if __name__ == '__main__':
 	if(os.path.exists('idx')):
@@ -18,6 +30,8 @@ if __name__ == '__main__':
 
 	query.content("shortest path")
 	results = ranker.score(idx, query, num_results)
+
+	results = sorted(results, key = lambda doc: int(doc[0]))
 	print results                            
 
 
