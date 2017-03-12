@@ -93,9 +93,12 @@ def joinSentances(stemmed_words):
 	returns              :    none
 """
 def write_sentances(cleaned_sentances):
-	print os.getcwd()
-	with open("summarizer/doc/doc.dat", 'w') as file:
-		file.write(	"\n".join(cleaned_sentances))
+	if('summarizer' in os.getcwd()):
+		with open("doc/doc.dat", 'w') as file:
+			file.write(	"\n".join(cleaned_sentances))
+	else:
+		with open("summarizer/doc/doc.dat", 'w') as file:
+			file.write(	"\n".join(cleaned_sentances))
 
 if __name__ == '__main__':
 	#nltk.download()

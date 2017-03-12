@@ -35,6 +35,4 @@ if __name__ == '__main__':
 	results = ranker.score(idx, query, num_results)
 
 	results = sorted(results, key = lambda doc: int(doc[0]))
-	print results                            
-
-
+	print results
