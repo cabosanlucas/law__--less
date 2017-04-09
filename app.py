@@ -53,7 +53,6 @@ def upload_target():
         cleaned_string = cleaner( pdf2text(file_text) ) # convert pdf to txt
         sentences = tokenize_text(cleaned_string)
         stemmed_sentences = clean_document_and_return_sentances(cleaned_string)
-        print sentences
         adj_matrix = create_sentence_adj_matrix(sentences)
         strings = run_textrank_and_return_n_sentences(adj_matrix, sentences, .85, len(sentences)/10, query = query_text)
         
@@ -84,7 +83,6 @@ def cases():
         return render_template("cases.html", extensions=init_extensions(), popup="none")
     else:
         return render_template("cases.html", extensions=init_extensions(), popup="none")
-    
 
 @app.route('/features',methods=['GET'])
 def features():
@@ -136,7 +134,6 @@ Initialize database with local extensions
 db.app = app
 db.init_app(app)
 db.create_all(app=app)
-#db.create_all(app=app)
 extensions = [f for f in listdir(join('static', 'scripts', 'extensions')) if not isfile(join('static', 'scripts', 'extensions', f))]
 for extension in extensions:
     if "config.json" in listdir(join('static', 'scripts', 'extensions', extension)):
