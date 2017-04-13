@@ -93,6 +93,7 @@ def joinSentances(stemmed_words):
 	returns              :    none
 """
 def write_sentances(cleaned_sentances):
+<<<<<<< HEAD
 	print os.getcwd()
 	with open("summarizer/doc/doc.dat", 'w') as file:
 		file.write(	"\n".join(cleaned_sentances))
@@ -102,6 +103,14 @@ def write_sentances(cleaned_sentances):
 		f.write("class\tinclude=True\n")
 		for sen in cleaned_sentances:
 			f.write("children" + "\t" + sen + "\n")
+=======
+	if('summarizer' in os.getcwd()):
+		with open("doc/doc.dat", 'w') as file:
+			file.write(	"\n".join(cleaned_sentances))
+	else:
+		with open("summarizer/doc/doc.dat", 'w') as file:
+			file.write(	"\n".join(cleaned_sentances))
+>>>>>>> origin/master
 
 if __name__ == '__main__':
 	#nltk.download()

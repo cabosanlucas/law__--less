@@ -2,14 +2,29 @@ import metapy
 import os
 import shutil
 from tokenizer import *
+from os import listdir
+from os.path import isfile, join
 
 def get_scores_for_doc(query):
 	#converts sentances written to the doc.dat file by the tokenizer to an inverted index
+	print os.getcwd()
+	if('summarizer' not in os.getcwd()):
+		print "hi"
+		os.chdir('summarizer/')
+	onlyfiles = [f for f in listdir(os.getcwd()) if isfile(join(os.getcwd(), f))]
+	print onlyfiles
 	if(os.path.exists('idx')):
 		shutil.rmtree('idx')
+<<<<<<< HEAD
 	idx = metapy.index.make_inverted_index('summarizer/config.toml')
 	ranker = metapy.index.DirichletPrior(2000.0)
 	#rocchio = metapy.index.Rocchio()
+=======
+	idx = metapy.index.make_inverted_index('config.toml')
+
+	ranker = metapy.index.OkapiBM25(k1=1.2, b=0.75, k3=500)
+
+>>>>>>> origin/master
 	query = metapy.index.Document()
 	query.content(str(query))
 
@@ -28,6 +43,7 @@ if __name__ == '__main__':
 	num_results = idx.num_docs()
 	print num_results
 	# Build the query object and initialize a ranker
+<<<<<<< HEAD
 	#query = metapy.index.Document()
 	#ranker = metapy.index.OkapiBM25(k1=1.2,b=0.75,k3=500)
 	#results = get_scores_for_doc()
@@ -38,3 +54,13 @@ if __name__ == '__main__':
 	print results                            
 
 
+=======
+	query = metapy.index.Document()
+	ranker = metapy.index.OkapiBM25(k1=1.2,b=0.75,k3=500)
+
+	query.content("shortest path")
+	results = ranker.score(idx, query, num_results)
+
+	results = sorted(results, key = lambda doc: int(doc[0]))
+	print results
+>>>>>>> origin/master

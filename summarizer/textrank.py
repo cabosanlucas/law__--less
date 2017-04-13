@@ -49,7 +49,7 @@ def textrank(adj_matrix, d, epsilon=0.00001, maxIterations=1000):
 
     #tr_matrix = normalize(tr_matrix, axis=0, norm='l1')
 
-    print tr_matrix
+    #print tr_matrix
 
     for iteration in range(maxIterations):
         old_state = np.copy(tr_matrix)
@@ -95,9 +95,15 @@ the same as the order in which the sentence was passed in
 '''
 def run_textrank_and_return_n_sentences(adj_matrix, s_array, d, n, query):
     eigen_vectors =  textrank(adj_matrix, d)
+<<<<<<< HEAD
     textrank_score = get_sentence_scores(s_array, eigen_vectors)
     #BM25_score = get_scores_for_doc(query)
     scores = textrank_score # + BM25_score
+=======
+    BM25_score = get_scores_for_doc(query)
+    textrank_score = get_sentence_scores(s_array, eigen_vectors)
+    scores = textrank_score + BM25_score
+>>>>>>> origin/master
     best_sentences = get_n_best_sentences(s_array, scores, n)
     return best_sentences
 
