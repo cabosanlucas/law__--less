@@ -71,7 +71,7 @@ def textrank(adj_matrix, d, epsilon=0.00001, maxIterations=1000):
 s_array: A list of sentences where each sentence is a list of terms
 scores : sentence scores
 n      : Number of sentences to return
-returns: n best sentences
+returns: n best sentencese
 '''
 def get_n_best_sentences(s_array, scores, n):
     #just in case
