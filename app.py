@@ -55,7 +55,7 @@ def upload_target():
         stemmed_sentences = clean_document_and_return_sentances(cleaned_string)
         print sentences
         adj_matrix = create_sentence_adj_matrix(sentences)
-        strings = run_textrank_and_return_n_sentences(adj_matrix, sentences, .85, len(sentences)/10, query = query_text)
+        strings = run_textrank_and_return_n_sentences(adj_matrix, sentences, .85, 5, query = query_text)
         
         out_file = open(md5.new(request.headers["User-Agent"]).hexdigest()+".txt", "w")
         for string in strings:

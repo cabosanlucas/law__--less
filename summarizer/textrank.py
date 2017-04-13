@@ -96,7 +96,8 @@ the same as the order in which the sentence was passed in
 def run_textrank_and_return_n_sentences(adj_matrix, s_array, d, n, query):
     eigen_vectors =  textrank(adj_matrix, d)
     textrank_score = get_sentence_scores(s_array, eigen_vectors)
-    BM25_score = get_scores_for_doc(query)
+    #BM25_score = get_scores_for_doc(query)
+    scores = textrank_score # + BM25_score
     best_sentences = get_n_best_sentences(s_array, scores, n)
     return best_sentences
 
