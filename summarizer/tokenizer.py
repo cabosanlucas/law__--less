@@ -94,7 +94,12 @@ def joinSentances(stemmed_words):
 	returns              :    none
 """
 def write_sentances(cleaned_sentances):
-	print os.getcwd()
+	print os.listdir(os.getcwd())
+
+	if('summarizer' in os.listdir(os.getcwd())):
+		print "hi"
+		os.chdir('summarizer')
+
 	with open("doc/doc.dat", 'w') as file:
 		file.write(	"\n".join(cleaned_sentances))
 	with open("doc/doc.tab", "w") as f:

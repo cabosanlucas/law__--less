@@ -45,7 +45,6 @@ def home():
 def upload_target():
     if request.method == "POST" :
         # query text entered in search box, if any
-        print ("logging error " + md5.new(request.headers["User-Agent"]))
 
         addr_hash = md5.new(request.headers["User-Agent"]).hexdigest()
         query_text = queries[addr_hash] if addr_hash in queries else ""
