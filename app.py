@@ -45,6 +45,8 @@ def home():
 def upload_target():
     if request.method == "POST" :
         # query text entered in search box, if any
+        print ("logging error " + md5.new(request.headers["User-Agent"]))
+
         addr_hash = md5.new(request.headers["User-Agent"]).hexdigest()
         query_text = queries[addr_hash] if addr_hash in queries else ""
         
@@ -57,6 +59,7 @@ def upload_target():
         strings = run_textrank_and_return_n_sentences(adj_matrix, sentences, .85, 5, query = query_text)
         
         out_file = open(md5.new(request.headers["User-Agent"]).hexdigest()+".txt", "w")
+
         for string in strings:
             out_file.write(string+".")
         out_file.close() # persistent abstract
