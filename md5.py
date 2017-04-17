@@ -7,8 +7,8 @@ import hashlib
 
 def new(message):
     m = hashlib.sha256()
-    print m.update(message.encode('utf-8'))
-    return m.update(message.encode('utf-8'))
+    m.update(message.encode('utf-8'))
+    return m
 
 def hexdigest(sha_obj):
     return sha_obj.hexdigest()
