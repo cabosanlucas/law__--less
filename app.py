@@ -3,6 +3,8 @@ from os import listdir,getcwd
 from os.path import isfile, join
 import md5
 import json
+import subprocess as spr
+import logging
 
 from input_cleaning.pdf2txt import *
 from summarizer.unigrams import calculate_unigrams
@@ -11,7 +13,9 @@ from summarizer.textrank import *
 from summarizer.graph_builder import *
 from summarizer.tokenizer import *
 from sqlalchemy.sql.expression import func
+from summarizer.topic_extractor import *
 from models import db, Extension
+from untitled import * 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -52,9 +56,23 @@ def upload_target():
         file_key = request.files.keys()[0]
         file_text = request.files[file_key] # of type FileStorage
         cleaned_string = cleaner( pdf2text(file_text) ) # convert pdf to txt
+        
+        with open("cleaned.txt", "w") as f:
+            f.write(cleaned_string)
+        with open("query.txt", "w") as f:
+            print "made text"
+            f.write(query_text)
+        spr_analytics = spr.Popen(['python','untitled.py'])
+        logging.warning(spr_analytics.communicate())
+        adj_matrix = np.array(json.loads(open('cleaned.txt').read()))
+        os.remove("cleaned.txt")
+        logging.warning("Successfully did some shit")
+
         sentences = tokenize_text(cleaned_string)
-        stemmed_sentences = clean_document_and_return_sentances(cleaned_string)
-        adj_matrix = create_sentence_adj_matrix(sentences)
+        #print sentences
+        #stemmed_sentences = clean_document_and_return_sentances(cleaned_string)
+        #adj_matrix = create_sentence_adj_matrix(sentences)
+        #adj_matrix = update_graph_with_query(adj_matrix, query_text)
         strings = run_textrank_and_return_n_sentences(adj_matrix, sentences, .85, 5, query = query_text)
         
         out_file = open(md5.new(request.headers["User-Agent"]).hexdigest()+".txt", "w")

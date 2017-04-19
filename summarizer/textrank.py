@@ -61,7 +61,7 @@ def textrank(adj_matrix, d, epsilon=0.00001, maxIterations=1000):
     vectors = []
     for vec in tr_matrix.T:
         vectors.append(vec)
-   # print vectors
+    print vectors
     return vectors
     #using scipy left eigenvector to grab scores
     #values, vectorss = spl.eig(tr_matrix, left=True, right=False)

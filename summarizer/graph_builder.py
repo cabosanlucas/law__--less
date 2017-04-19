@@ -25,11 +25,11 @@ def build_adj_matrix(adj_matrix, doc_s_matrix):
         for s2_index in range( len( doc_s_matrix ) ):
             adj_matrix[s1_index][s2_index] = compute_similarity( doc_s_matrix[s1_index], doc_s_matrix[s2_index])
         this_col = float(sum(adj_matrix[s1_index][:]))
-        print this_col
+        #print this_col
         for s2_index in range( len( doc_s_matrix ) ):
             num = float(adj_matrix[s1_index][s2_index]) / this_col
             adj_matrix[s1_index][s2_index] = num 
-            print adj_matrix[s1_index][s2_index] 
+            #print adj_matrix[s1_index][s2_index] 
     return adj_matrix
 
 '''
